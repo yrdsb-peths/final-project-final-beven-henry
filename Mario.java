@@ -14,6 +14,19 @@ public class Mario extends Actor
      */
     public void act()
     {
-        // Add your action code here.
+        int x = getX();
+        int y = getY();
+        int ySpd = 4;
+        int speed = 1;
+        if(Greenfoot.isKeyDown("a")){
+            move(-speed);
+        }
+        if(Greenfoot.isKeyDown("d")){
+            move(speed);
+        }
+        if(Greenfoot.isKeyDown("w")){
+            setLocation(x, y-1);
+        }
+        
     }
 }
