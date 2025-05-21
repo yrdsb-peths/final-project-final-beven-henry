@@ -37,6 +37,7 @@ public class Mario extends Actor
     }
     public void act()
     {
+
         if(Greenfoot.isKeyDown("left")) 
         {
             move(-5);
@@ -71,5 +72,6 @@ public class Mario extends Actor
             
             deltaTimer.mark();
         }
+
     }
 }
