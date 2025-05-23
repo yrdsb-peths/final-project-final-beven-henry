@@ -18,6 +18,8 @@ public class Mario extends Actor
     SimpleTimer deltaTimer = new SimpleTimer();
     int facing = 0;
     int imageIndex = 0;
+    int v = 0;
+    int accel = 0;
     public Mario()
     {
         deltaTimer.mark();
@@ -37,24 +39,11 @@ public class Mario extends Actor
     }
     public void act()
     {
-
-        if(Greenfoot.isKeyDown("left")) 
-        {
-            move(-5);
-            facing = 1;
-            runAnimation();
-        } 
-        else if(Greenfoot.isKeyDown("right")) 
-        {
-            move(5);
-            facing = 0;
-            runAnimation();
-        }
+        movement();
+        isFalling();
+        fall();
         
-        if (!Greenfoot.isKeyDown("left") && !Greenfoot.isKeyDown("right"))
-        {
-            setImage(idle);
-        }
+        
     }
     public void runAnimation() 
     {
@@ -74,4 +63,42 @@ public class Mario extends Actor
         }
 
     }
+    public void movement(){
+        if(Greenfoot.isKeyDown("left") ) 
+        {
+            move(-5);
+            facing = 1;
+            runAnimation();
+        } 
+        else if(Greenfoot.isKeyDown("right")) 
+        {
+            move(5);
+            facing = 0;
+            runAnimation();
+        }
+        
+        if(Greenfoot.isKeyDown("up")){
+            v = -10;
+        }
+        
+        if (!Greenfoot.isKeyDown("left") && !Greenfoot.isKeyDown("right"))
+        {
+            setImage(idle);
+        }
+    }
+    public void fall(){
+        
+            setLocation(getX(), getY() + v);
+        
+    }
+    
+    public void isFalling(){
+        if(!isTouching(Floor.class)){
+            v++;
+        } else if(isTouching(Floor.class)){
+            setLocation(getX(), getY() - 1);
+            v = 0;
+        }
+    }
+    
 }
