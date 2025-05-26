@@ -15,7 +15,7 @@ public class Floor extends Actor
     public Floor(){
         GreenfootImage i = new GreenfootImage("images/corkboard.jpg");
         setImage(i);
-        i.scale(7000, 100);
+        i.scale(400, 100);
     }
     public void act()
     {

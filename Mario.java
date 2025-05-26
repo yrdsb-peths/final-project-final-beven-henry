@@ -20,26 +20,31 @@ public class Mario extends Actor
     int imageIndex = 0;
     int v = 0;
     int accel = 0;
+    int spd = 6;
+    boolean canJump = true;
     public Mario()
     {
         deltaTimer.mark();
         setImage(idle);
-        idle.scale(100, 100);
+        idle.scale(70, 70);
 
-        for(int i = 1; i < runAnimationRight.length; i++) {
+        for(int i = 0; i < runAnimationRight.length; i++) {
             runAnimationRight[i] = new GreenfootImage("images/runAnimation/runRight" + i + ".png");
-            runAnimationRight[i].scale(100, 100);
+            runAnimationRight[i].scale(70, 70);
         }
 
-        for(int i = 1; i < runAnimationLeft.length; i++) {
+        for(int i = 0; i < runAnimationLeft.length; i++) {
             runAnimationLeft[i] = new GreenfootImage("images/runAnimation/runRight" + i + ".png");
             runAnimationLeft[i].mirrorHorizontally();
-            runAnimationLeft[i].scale(100, 100);
+            runAnimationLeft[i].scale(70, 70);
         }
     }
     public void act()
     {
         movement();
+        
+        bonk();
+        
         isFalling();
         fall();
         
@@ -63,22 +68,24 @@ public class Mario extends Actor
         }
 
     }
+    
     public void movement(){
         if(Greenfoot.isKeyDown("left") ) 
         {
-            move(-5);
+            setLocation(getX() - spd, getY());
             facing = 1;
             runAnimation();
         } 
         else if(Greenfoot.isKeyDown("right")) 
         {
-            move(5);
+            setLocation(getX() + spd, getY());
             facing = 0;
             runAnimation();
         }
         
-        if(Greenfoot.isKeyDown("up")){
-            v = -10;
+        if(Greenfoot.isKeyDown("up") && canJump == true){
+            v = -20;
+            canJump = false;
         }
         
         if (!Greenfoot.isKeyDown("left") && !Greenfoot.isKeyDown("right"))
@@ -86,6 +93,15 @@ public class Mario extends Actor
             setImage(idle);
         }
     }
+    
+    
+    public void bonk(){
+        if(isTouching(Brick.class) && v < 0   ){
+            removeTouching(Brick.class);
+            v = -v/3;
+        }
+    }
+    
     public void fall(){
         
             setLocation(getX(), getY() + v);
@@ -94,11 +110,14 @@ public class Mario extends Actor
     
     public void isFalling(){
         if(!isTouching(Floor.class)){
-            v++;
+            v = v + 1;
         } else if(isTouching(Floor.class)){
             setLocation(getX(), getY() - 1);
             v = 0;
+            canJump = true;
         }
     }
+    
+    
     
 }
