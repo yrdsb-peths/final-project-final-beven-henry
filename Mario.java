@@ -13,8 +13,8 @@ public class Mario extends Actor
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     GreenfootImage idle = new GreenfootImage("marioidle.png");
-    GreenfootImage[] runAnimationLeft = new GreenfootImage[3];
-    GreenfootImage[] runAnimationRight = new GreenfootImage[3];
+    GreenfootImage[] runAnimationLeft = new GreenfootImage[4];
+    GreenfootImage[] runAnimationRight = new GreenfootImage[4];
     SimpleTimer deltaTimer = new SimpleTimer();
     int facing = 0;
     int imageIndex = 0;
