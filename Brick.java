@@ -14,7 +14,7 @@ public class Brick extends Actor
      */
     //hi
     public Brick(){
-        GreenfootImage i = new GreenfootImage("images/brick.jpg");
+        GreenfootImage i = new GreenfootImage("images/brick.png");
         setImage(i);
         i.scale(50, 50);
     }
