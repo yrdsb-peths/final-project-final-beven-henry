@@ -20,7 +20,7 @@ public class Mario extends Actor
     int imageIndex = 0;
     int v = 0;
     int accel = 0;
-    int spd = 6;
+    int spd = 7;
     boolean canJump = true;
     public Mario()
     {
@@ -46,7 +46,7 @@ public class Mario extends Actor
         bonk();
         
         isFalling();
-        fall();
+        
         
         
     }
@@ -84,7 +84,7 @@ public class Mario extends Actor
         }
         
         if(Greenfoot.isKeyDown("up") && canJump == true){
-            v = -20;
+            v = -21;
             canJump = false;
         }
         
@@ -95,10 +95,13 @@ public class Mario extends Actor
     }
     
     
+    
     public void bonk(){
         if(isTouching(Brick.class) && v < 0   ){
+            
             removeTouching(Brick.class);
             v = -v/3;
+            
         }
     }
     
@@ -108,14 +111,27 @@ public class Mario extends Actor
         
     }
     
+    boolean onGround(){
+        Actor under0 = getOneObjectAtOffset(0, getImage().getHeight()/2, Floor.class);
+        Actor under = getOneObjectAtOffset(0, getImage().getHeight()/2, Brick.class);
+        
+        return under0 != null || under != null;
+    }
+    
+    
+    
     public void isFalling(){
-        if(!isTouching(Floor.class)){
+        if(onGround() == false){
             v = v + 1;
-        } else if(isTouching(Floor.class)){
-            setLocation(getX(), getY() - 1);
+            fall();
+        }
+        if(onGround() == true){
+            setLocation(getX(), getY() -1 );
             v = 0;
             canJump = true;
         }
+        
+        
     }
     
     

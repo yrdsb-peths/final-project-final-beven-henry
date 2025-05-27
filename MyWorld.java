@@ -31,5 +31,8 @@ public class MyWorld extends World {
         Brick brick1 = new Brick();
         addObject(brick1, 250, 200);
         
+        Brick brick2 = new Brick();
+        addObject(brick2, 400, 340);
+        
     }
 }
