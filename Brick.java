@@ -12,7 +12,6 @@ public class Brick extends Actor
      * Act - do whatever the brick wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
-    //sdsxgtdsgtxed
     //hi
     public Brick(){
         GreenfootImage i = new GreenfootImage("images/brick.jpg");
