@@ -34,7 +34,7 @@ public class MyWorld extends World {
         Brick brick1 = new Brick();
         addObject(brick1, 250, 200);
         
-<<<<<<< HEAD
+
         Coin coin1 = new Coin();
         addObject(coin1, 250, 250);
 
@@ -45,10 +45,10 @@ public class MyWorld extends World {
         addObject(scoreLabel, 100, 50);
 
 
-=======
+
         Brick brick2 = new Brick();
         addObject(brick2, 400, 340);
->>>>>>> e6abfe27ec1afc6d06f499d4cdddb21ca66d2499
+ 
         
     }
 }

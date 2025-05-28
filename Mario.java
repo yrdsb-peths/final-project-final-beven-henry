@@ -46,13 +46,13 @@ public class Mario extends Actor
         bonk();
         
         isFalling();
-<<<<<<< HEAD
+
         fall();
         collectCoins();
-=======
+
         
         
->>>>>>> e6abfe27ec1afc6d06f499d4cdddb21ca66d2499
+
         
     }
     public void runAnimation() 
