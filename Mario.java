@@ -47,7 +47,7 @@ public class Mario extends Actor
         
         isFalling();
         fall();
-        
+        collectCoins();
         
     }
     public void runAnimation() 
@@ -117,7 +117,22 @@ public class Mario extends Actor
             canJump = true;
         }
     }
-    
+    public void collectCoins() {
+        if (isTouching(Coin.class)) {
+            removeTouching(Coin.class);
+            MyWorld.score++;
+            updateScoreLabel();
+        }
+    }
+
+    public void updateScoreLabel() {
+        World world = getWorld();
+        if (world instanceof MyWorld) {
+            MyWorld myWorld = (MyWorld) world;
+            myWorld .scoreLabel.setValue("Score: " + MyWorld.score);
+        }
+    }
+
     
     
 }

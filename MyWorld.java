@@ -1,6 +1,9 @@
 import greenfoot.*;
 
+
 public class MyWorld extends World {
+    public Label scoreLabel;
+    public static int score = 0;
     public MyWorld() {
         super(700, 400, 1, false);
         
@@ -30,6 +33,17 @@ public class MyWorld extends World {
         
         Brick brick1 = new Brick();
         addObject(brick1, 250, 200);
+        
+        Coin coin1 = new Coin();
+        addObject(coin1, 250, 250);
+
+        Coin coin2 = new Coin();
+        addObject(coin2, 350, 250);
+        
+        scoreLabel = new Label("Score: 0", 30);
+        addObject(scoreLabel, 100, 50);
+
+
         
     }
 }
