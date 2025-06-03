@@ -48,6 +48,9 @@ public class Mario extends Actor
         isFalling();
 
         fall();
+        checkRight();
+        checkLeft();
+        
         collectCoins();
 
         
@@ -112,19 +115,19 @@ public class Mario extends Actor
     
     public void fall(){
         
-            setLocation(getX(), getY() + v);
+        setLocation(getX(), getY() + v);
         
     }
     
     boolean onGround(){
-        Actor under0 = getOneObjectAtOffset(0, getImage().getHeight()/2, Floor.class);
-        Actor under = getOneObjectAtOffset(0, getImage().getHeight()/2, Brick.class);
         
-        return under0 != null || under != null;
+        Actor under = getOneObjectAtOffset(0, getImage().getHeight()/2, Platform.class);
+        
+        return under != null;
     }
     
     public void moveToGround(){
-        Actor ground = getOneObjectAtOffset(0, getImage().getHeight()/2, Floor.class);
+        Actor ground = getOneObjectAtOffset(0, getImage().getHeight()/2, Platform.class);
         int newY = ground.getY() - (ground.getImage().getHeight() + getImage().getHeight())/2 -1;
         setLocation(getX(), newY);
     }
@@ -143,7 +146,43 @@ public class Mario extends Actor
         
     }
     
+    public void checkRight(){
+        Actor rightWall = getThingRight();
+        if(rightWall != null){
+            stopAtRight(rightWall);
+        }
+    }
     
+    public void stopAtRight(Actor right){
+        int wallWidth = right.getImage().getWidth();
+        int newX = right.getX() - (wallWidth + getImage().getWidth())/2 + 1;
+        setLocation(newX, getY());
+    }
+    
+    public Actor getThingRight(){
+        int spriteWidth = getImage().getWidth();
+        int xDis = spriteWidth/2 + 1;
+        return getOneObjectAtOffset(xDis, 0, Platform.class);
+    }
+    
+    public void checkLeft(){
+        Actor leftWall = getThingLeft();
+        if(leftWall != null){
+            stopAtLeft(leftWall);
+        }
+    }
+    
+    public void stopAtLeft(Actor left){
+        int wallWidth = left.getImage().getWidth();
+        int newX = left.getX() + (wallWidth + getImage().getWidth())/2 - 1;
+        setLocation(newX, getY());
+    }
+    
+    public Actor getThingLeft(){
+        int spriteWidth = getImage().getWidth();
+        int xDis = (spriteWidth+1)/2;
+        return getOneObjectAtOffset(-xDis, 0, Platform.class);
+    }
     
     
     public void collectCoins() {
