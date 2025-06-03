@@ -123,7 +123,11 @@ public class Mario extends Actor
         return under0 != null || under != null;
     }
     
-    
+    public void moveToGround(){
+        Actor ground = getOneObjectAtOffset(0, getImage().getHeight()/2, Floor.class);
+        int newY = ground.getY() - (ground.getImage().getHeight() + getImage().getHeight())/2 -1;
+        setLocation(getX(), newY);
+    }
     
     public void isFalling(){
         if(onGround() == false){
@@ -131,13 +135,17 @@ public class Mario extends Actor
             fall();
         }
         if(onGround() == true){
-            setLocation(getX(), getY() -1 );
+            moveToGround();
             v = 0;
             canJump = true;
         }
         
         
     }
+    
+    
+    
+    
     public void collectCoins() {
         if (isTouching(Coin.class)) {
             removeTouching(Coin.class);
