@@ -22,6 +22,9 @@ public class Mario extends Actor
     int accel = 0;
     int spd = 7;
     boolean canJump = true;
+    private int hp = 3;
+    private Label hpLabel;
+
     public Mario()
     {
         deltaTimer.mark();
@@ -42,6 +45,7 @@ public class Mario extends Actor
     public void act()
     {
         movement();
+        updateHpLabel();
         
         bonk();
         
@@ -58,6 +62,26 @@ public class Mario extends Actor
 
         
     }
+    public void takeDamage() {
+        hp--;
+        updateHpLabel();
+        if (hp <= 0) {
+            getWorld().addObject(new Label("Game Over", 60), getWorld().getWidth() / 2, getWorld().getHeight() / 2);
+            Greenfoot.stop();
+        }
+    }
+
+    public void setHpLabel(Label label) {
+        this.hpLabel = label;
+        updateHpLabel();
+    }
+
+    public void updateHpLabel() {
+        if (hpLabel != null) {
+            hpLabel.setValue("HP: " + hp);
+        }
+    }
+
     public void runAnimation() 
     {
         if (deltaTimer.millisElapsed() > 250)
@@ -92,7 +116,7 @@ public class Mario extends Actor
         }
         
         if(Greenfoot.isKeyDown("up") && canJump == true){
-            v = -21;
+            v = -15;
             canJump = false;
         }
         
@@ -200,6 +224,10 @@ public class Mario extends Actor
             myWorld .scoreLabel.setValue("Score: " + MyWorld.score);
         }
     }
+    public void bounce() {
+        v = -15;
+    }
+
 
     
     

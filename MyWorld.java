@@ -4,11 +4,16 @@ import greenfoot.*;
 public class MyWorld extends World {
     public Label scoreLabel;
     public static int score = 0;
+    public Label hpLabel;
     public MyWorld() {
         super(700, 400, 1, false);
         
         Mario mario = new Mario();
         addObject(mario, 300, 320);
+        hpLabel = new Label("HP: 3", 30);
+        addObject(hpLabel, 600, 50);
+        mario.setHpLabel(hpLabel);
+    
         
         Floor floor0 = new Floor();
         addObject(floor0, 100, 430);
@@ -43,6 +48,8 @@ public class MyWorld extends World {
         
         scoreLabel = new Label("Score: 0", 30);
         addObject(scoreLabel, 100, 50);
+        Goomba g = new Goomba();
+        addObject(g, 500, 370);
 
 
 
