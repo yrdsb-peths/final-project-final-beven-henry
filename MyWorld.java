@@ -5,15 +5,20 @@ public class MyWorld extends World {
     public Label scoreLabel;
     public static int score = 0;
     public Label hpLabel;
+    
     public MyWorld() {
         super(700, 400, 1, false);
         
         Mario mario = new Mario();
         addObject(mario, 300, 320);
+        
         hpLabel = new Label("HP: 3", 30);
         addObject(hpLabel, 600, 50);
         mario.setHpLabel(hpLabel);
     
+        scoreLabel = new Label("Score: 0", 30);
+        addObject(scoreLabel, 100, 50);
+        
         
         Floor floor0 = new Floor();
         addObject(floor0, 100, 430);
@@ -37,8 +42,10 @@ public class MyWorld extends World {
         addObject(brick0, 200, 200);
         
         Brick brick1 = new Brick();
-        addObject(brick1, 250, 200);
+        addObject(brick1, 300, 200);
         
+        Block block0 = new Block();
+        addObject(block0, 250, 200);
 
         Coin coin1 = new Coin();
         addObject(coin1, 250, 250);
@@ -46,8 +53,7 @@ public class MyWorld extends World {
         Coin coin2 = new Coin();
         addObject(coin2, 350, 250);
         
-        scoreLabel = new Label("Score: 0", 30);
-        addObject(scoreLabel, 100, 50);
+        
         Goomba g = new Goomba();
         addObject(g, 500, 370);
 
@@ -55,7 +61,9 @@ public class MyWorld extends World {
 
         Brick brick2 = new Brick();
         addObject(brick2, 400, 340);
- 
+         
+    
         
     }
+    
 }

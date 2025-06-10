@@ -55,7 +55,7 @@ public class Mario extends Actor
         checkRight();
         checkLeft();
         
-        collectCoins();
+        collect();
 
         
         
@@ -129,13 +129,16 @@ public class Mario extends Actor
     
     
     public void bonk(){
-        if(isTouching(Brick.class) && v < 0   ){
+        if(isTouching(Platform.class) && v < 0   ){
             
             removeTouching(Brick.class);
+            
             v = -v/3;
             
         }
     }
+    
+    
     
     public void fall(){
         
@@ -155,6 +158,8 @@ public class Mario extends Actor
         int newY = ground.getY() - (ground.getImage().getHeight() + getImage().getHeight())/2 -1;
         setLocation(getX(), newY);
     }
+    
+    
     
     public void isFalling(){
         if(onGround() == false){
@@ -209,10 +214,15 @@ public class Mario extends Actor
     }
     
     
-    public void collectCoins() {
+    public void collect() {
         if (isTouching(Coin.class)) {
             removeTouching(Coin.class);
             MyWorld.score++;
+            updateScoreLabel();
+        }
+        if (isTouching(Mushroom.class)) {
+            removeTouching(Mushroom.class);
+            
             updateScoreLabel();
         }
     }
@@ -224,10 +234,12 @@ public class Mario extends Actor
             myWorld .scoreLabel.setValue("Score: " + MyWorld.score);
         }
     }
+    
     public void bounce() {
         v = -15;
     }
 
+    
 
     
     
