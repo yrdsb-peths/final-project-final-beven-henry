@@ -8,6 +8,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Block extends Platform
 {
+    boolean use = false;
     /**
      * Act - do whatever the Block wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
@@ -25,12 +26,16 @@ public class Block extends Platform
     
     public void act()
     {
-        Actor Mario = (Mario) getOneIntersectingObject(Actor.class);
-        if(Mario != null ){
-            GreenfootImage used = new GreenfootImage("images/used.png");
-            used.scale(50, 50);
-            setImage(used);
-            spawnMush();
+        Mario mario = (Mario) getOneIntersectingObject(Mario.class);
+        
+        if(use == false){
+            if(mario != null && mario.getV() <= 0){
+                GreenfootImage used = new GreenfootImage("images/used.png");
+                used.scale(50, 50);
+                setImage(used);
+                spawnMush();
+                use = true;
+            }
         }
     }
 }

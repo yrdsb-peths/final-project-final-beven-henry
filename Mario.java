@@ -16,12 +16,13 @@ public class Mario extends Actor
     GreenfootImage[] runAnimationLeft = new GreenfootImage[4];
     GreenfootImage[] runAnimationRight = new GreenfootImage[4];
     SimpleTimer deltaTimer = new SimpleTimer();
-    int facing = 0;
-    int imageIndex = 0;
-    int v = 0;
-    int accel = 0;
-    int spd = 7;
-    boolean canJump = true;
+    public int facing = 0;
+    public int imageIndex = 0;
+    public int v = 0;
+    public boolean dJump = true;
+    public int accel = 0;
+    public int spd = 7;
+    public boolean canJump = true;
     private int hp = 3;
     private Label hpLabel;
 
@@ -29,19 +30,30 @@ public class Mario extends Actor
     {
         deltaTimer.mark();
         setImage(idle);
-        idle.scale(70, 70);
+        idle.scale(50, 50);
 
         for(int i = 0; i < runAnimationRight.length; i++) {
             runAnimationRight[i] = new GreenfootImage("images/runAnimation/runRight" + i + ".png");
-            runAnimationRight[i].scale(70, 70);
+            runAnimationRight[i].scale(50, 50);
         }
 
         for(int i = 0; i < runAnimationLeft.length; i++) {
             runAnimationLeft[i] = new GreenfootImage("images/runAnimation/runRight" + i + ".png");
             runAnimationLeft[i].mirrorHorizontally();
-            runAnimationLeft[i].scale(70, 70);
+            runAnimationLeft[i].scale(50, 50);
         }
     }
+    
+    //changes v value
+    public void v(int x){
+        v = x;
+    }
+    
+    //returns v value
+    public int getV(){
+        return v;
+    }
+    
     public void act()
     {
         movement();
@@ -101,6 +113,16 @@ public class Mario extends Actor
 
     }
     
+    /**
+     * movement keys
+     * 
+     * left key to go left
+     * 
+     * right key to go right
+     * 
+     * up key to go up
+     */
+    
     public void movement(){
         if(Greenfoot.isKeyDown("left") ) 
         {
@@ -116,8 +138,12 @@ public class Mario extends Actor
         }
         
         if(Greenfoot.isKeyDown("up") && canJump == true){
-            v = -15;
+            v = -17;
             canJump = false;
+            if(dJump == true){
+                v = -17;
+                dJump = false;
+            }
         }
         
         if (!Greenfoot.isKeyDown("left") && !Greenfoot.isKeyDown("right"))
@@ -127,25 +153,29 @@ public class Mario extends Actor
     }
     
     
-    
+    //tries to break block when hit
     public void bonk(){
-        if(isTouching(Platform.class) && v < 0   ){
+        Actor under = getOneObjectAtOffset(0, getImage().getHeight()/2, Platform.class);
+         
+            if(isTouching(Platform.class) && v < 0){
             
-            removeTouching(Brick.class);
+                removeTouching(Brick.class);
             
-            v = -v/3;
+                v= -v/3;
             
-        }
+            }
+        
     }
     
     
-    
+    //makes actor go down to floor
     public void fall(){
         
         setLocation(getX(), getY() + v);
         
     }
     
+    //checks if actor touching ground
     boolean onGround(){
         
         Actor under = getOneObjectAtOffset(0, getImage().getHeight()/2, Platform.class);
@@ -153,6 +183,8 @@ public class Mario extends Actor
         return under != null;
     }
     
+    //moves to ground when actor touches
+    //doesnt fall through
     public void moveToGround(){
         Actor ground = getOneObjectAtOffset(0, getImage().getHeight()/2, Platform.class);
         int newY = ground.getY() - (ground.getImage().getHeight() + getImage().getHeight())/2 -1;
@@ -160,21 +192,28 @@ public class Mario extends Actor
     }
     
     
-    
+    // checks if falling
     public void isFalling(){
         if(onGround() == false){
+            
             v = v + 1;
             fall();
         }
         if(onGround() == true){
             moveToGround();
             v = 0;
+            dJump = true;
             canJump = true;
         }
         
         
     }
     
+    /**
+     * first checks if touching a side of a wall
+     * then stops actor to move through
+     * checks for most sides
+     */
     public void checkRight(){
         Actor rightWall = getThingRight();
         if(rightWall != null){
@@ -184,7 +223,7 @@ public class Mario extends Actor
     
     public void stopAtRight(Actor right){
         int wallWidth = right.getImage().getWidth();
-        int newX = right.getX() - (wallWidth + getImage().getWidth())/2 + 1;
+        int newX = right.getX() - (wallWidth + getImage().getWidth())/2 ;
         setLocation(newX, getY());
     }
     
@@ -203,7 +242,7 @@ public class Mario extends Actor
     
     public void stopAtLeft(Actor left){
         int wallWidth = left.getImage().getWidth();
-        int newX = left.getX() + (wallWidth + getImage().getWidth())/2 - 1;
+        int newX = left.getX() + (wallWidth + getImage().getWidth())/2 ;
         setLocation(newX, getY());
     }
     
@@ -213,17 +252,25 @@ public class Mario extends Actor
         return getOneObjectAtOffset(-xDis, 0, Platform.class);
     }
     
-    
+    /**
+     * collects and updates values corresponding to the item
+     * coin for score
+     * mush for lives
+     */
     public void collect() {
-        if (isTouching(Coin.class)) {
+        Actor mush = getOneIntersectingObject(Mushroom.class);
+        if(isTouching(Coin.class)) {
             removeTouching(Coin.class);
             MyWorld.score++;
             updateScoreLabel();
         }
-        if (isTouching(Mushroom.class)) {
+        if(isTouching(Mushroom.class)){
             removeTouching(Mushroom.class);
+            if(!isTouching(Mushroom.class)){
+                hp++;
+                updateScoreLabel();
+            }
             
-            updateScoreLabel();
         }
     }
 
@@ -235,8 +282,8 @@ public class Mario extends Actor
         }
     }
     
-    public void bounce() {
-        v = -15;
+    public void bounce(){
+        v=-15;
     }
 
     

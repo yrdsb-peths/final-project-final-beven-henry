@@ -6,9 +6,42 @@ public class MyWorld extends World {
     public static int score = 0;
     public Label hpLabel;
     
+    //0 = air, 1 = brick, 2 = ?block
+    private int[][] levelLayout = {
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+        {0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1},
+        {0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1},
+        {0, 0, 0, 0, 1, 1, 2, 1, 1, 0, 0, 0, 0, 1},
+        {0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1},
+        {0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1},
+        {0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1}
+    };
+    
+    public void buildLevel(){
+        int tileSize = 50;
+        for (int row = 0; row < levelLayout.length; row++) {
+            for (int col = 0; col < levelLayout[row].length; col++) {
+                int value = levelLayout[row][col];
+                int x = col * tileSize + tileSize / 2;
+                int y = row * tileSize + tileSize / 2;
+
+                if (value == 1) {
+                    addObject(new Brick(), x, y);
+                }
+                if (value == 2) {
+                    addObject(new Block(), x, y);
+                }
+                if (value == 3) {
+                    addObject(new Goomba(), x, y);
+                }
+            }
+        }
+    }
+    
     public MyWorld() {
         super(700, 400, 1, false);
-        
+        buildLevel();
         Mario mario = new Mario();
         addObject(mario, 300, 320);
         
@@ -38,15 +71,7 @@ public class MyWorld extends World {
         Floor floor5 = new Floor();
         addObject(floor5, 600, 430);
         
-        Brick brick0 = new Brick();
-        addObject(brick0, 200, 200);
-        
-        Brick brick1 = new Brick();
-        addObject(brick1, 300, 200);
-        
-        Block block0 = new Block();
-        addObject(block0, 250, 200);
-
+    
         Coin coin1 = new Coin();
         addObject(coin1, 250, 250);
 
@@ -55,12 +80,11 @@ public class MyWorld extends World {
         
         
         Goomba g = new Goomba();
-        addObject(g, 500, 370);
+        addObject(g, 325, 150);
 
 
 
-        Brick brick2 = new Brick();
-        addObject(brick2, 400, 340);
+        
          
     
         
